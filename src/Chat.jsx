@@ -7,7 +7,7 @@ import ChatMessages from "./ChatMessages"
 import socketIO from "socket.io-client"
 import ChatGroupChats from "./ChatGroupChats"
 
-const socket = socketIO.connect("http://localhost:3001");
+const socket = socketIO.connect(process.env.REACT_APP_API_ENDPOINT);
 export const Chat = () => {
     const [userContext, setUserContext] = useContext(UserContext)
     const [usersOrChats, setUsersOrChats] = useState("users");
