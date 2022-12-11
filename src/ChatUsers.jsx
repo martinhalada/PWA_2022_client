@@ -35,13 +35,13 @@ const ChatUsers = (props) => {
     function setClass(data) {
         if (!document.getElementById("listOfUsers")) return;
         let users_list = document.getElementById("listOfUsers");
-        if (users_list.childNodes.length == 0) return;
+        if (users_list.childNodes.length === 0) return;
         const elems = users_list.getElementsByTagName("li");
         for (let elem of elems) {
             let uName = elem.id;
             let found = false;
-            for (const [key, value] of Object.entries(data)) {
-                if (uName == value) {
+            for (const [, value] of Object.entries(data)) {
+                if (uName === value) {
                     elem.setAttribute("class", "online");
                     found = true;
                     break;

@@ -8,7 +8,7 @@ export const Register = (props) => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [message, setMessage] = useState("");
-    const [userContext, setUserContext] = useContext(UserContext);
+    const [, setUserContext] = useContext(UserContext);
 
     const submitForm = function (e) {
         e.preventDefault();

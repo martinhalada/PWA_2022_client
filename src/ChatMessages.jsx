@@ -41,7 +41,7 @@ const ChatMessages = (props) => {
     const handleMessageInput = (e) => {
         setCurrentMessage(e.target.value);
 
-        if (isUserTyping == false) {
+        if (isUserTyping === false) {
             props.socket.emit("typing", {
                 currentUser: props.username,
                 chatRoom: props.chatId
@@ -65,10 +65,10 @@ const ChatMessages = (props) => {
     useEffect(() => {
         props.socket.on("chat", function (data) {
             const messages_list = document.getElementById("listOfMessages");
-            if (data.send_user == props.username) {
+            if (data.send_user === props.username) {
                 messages_list.innerHTML += "<li class=\"right\"><label>" + data.send_user + ": " + data.message + "</label></li>";
             } else {
-                messages_list.innerHTML += "<li class=\left\"><label>" + data.send_user + ": " + data.message + "</label></li>";
+                messages_list.innerHTML += "<li class=\"left\"><label>" + data.send_user + ": " + data.message + "</label></li>";
             }
         });
     }, [props.socket]);
@@ -78,10 +78,10 @@ const ChatMessages = (props) => {
         const messages_list = document.getElementById("listOfMessages");
         messages_list.innerHTML = "";
         for (let m of messages.messages) {
-            if (m.sender == props.username) {
+            if (m.sender === props.username) {
                 messages_list.innerHTML += "<li class=\"right\"><label>" + m.sender + ": " + m.message + "</label></li>";
             } else {
-                messages_list.innerHTML += "<li class=\left\"><label>" + m.sender + ": " + m.message + "</label></li>";
+                messages_list.innerHTML += "<li class=\"left\"><label>" + m.sender + ": " + m.message + "</label></li>";
             }
         }
     }, [messages]);
