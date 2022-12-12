@@ -72,6 +72,7 @@ export const Chat = () => {
                 Authorization: `Bearer ${userContext.token}`,
             },
         }).then(async response => {
+            socket.removeAllListeners();
             setUserContext(oldValues => {
                 return { ...oldValues, details: undefined, token: null }
             })
