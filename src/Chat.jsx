@@ -61,6 +61,9 @@ export const Chat = () => {
     }, [userContext.details, fetchUserDetails])
 
     const logoutHandler = () => {
+        socket.emit("logout", {
+            currentUser: userContext.details.username
+        });
         fetch(process.env.REACT_APP_API_ENDPOINT + "/user/logout", {
             withCredentials: true,
             credentials: "include",

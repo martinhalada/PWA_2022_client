@@ -6,6 +6,7 @@ const ChatMessages = (props) => {
     const [messages, setMessages] = useState([]);
     const [currentMessage, setCurrentMessage] = useState("");
     const [isUserTyping, setIsUserTyping] = useState(false);
+    const [mess, setMess] = useState("");
 
     useEffect(() => {
         const fetchData = () => {
@@ -28,6 +29,7 @@ const ChatMessages = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setMess(currentMessage)
 
         props.socket.emit("chat", {
             message: currentMessage,
@@ -62,6 +64,12 @@ const ChatMessages = (props) => {
     }
 
     // listen for events
+    useEffect(() => {
+        if (mess === "") return;
+        const messages_list = document.getElementById("listOfMessages");
+        messages_list.innerHTML += "<li class=\"right\"><label>" + props.username + ": " + mess + "</label></li>";
+    }, [mess]);
+
     useEffect(() => {
         props.socket.on("chat", function (data) {
             const messages_list = document.getElementById("listOfMessages");
