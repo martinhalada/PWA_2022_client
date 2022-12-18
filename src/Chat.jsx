@@ -8,7 +8,7 @@ import socketIO from "socket.io-client"
 import ChatGroupChats from "./ChatGroupChats"
 
 const socket = socketIO.connect(process.env.REACT_APP_API_ENDPOINT);
-export const Chat = () => {
+export const Chat = (props) => {
     const [userContext, setUserContext] = useContext(UserContext)
     const [usersOrChats, setUsersOrChats] = useState("users");
     const [messagesOrGroup, setMessagesOrGroup] = useState("messages");
@@ -30,7 +30,7 @@ export const Chat = () => {
             credentials: "include",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${userContext.token}`,
+                "Authorization": `Bearer ${props.token}`,
             },
         }).then(async response => {
             if (response.ok) {
@@ -52,7 +52,7 @@ export const Chat = () => {
             }
 
         })
-    }, [setUserContext, userContext.token])
+    }, [setUserContext])
 
     useEffect(() => {
         if (!userContext.details) {
@@ -72,6 +72,7 @@ export const Chat = () => {
                 Authorization: `Bearer ${userContext.token}`,
             },
         }).then(async response => {
+            localStorage.removeItem("refreshToken")
             socket.removeAllListeners();
             setUserContext(oldValues => {
                 return { ...oldValues, details: undefined, token: null }

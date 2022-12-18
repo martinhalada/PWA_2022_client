@@ -34,6 +34,7 @@ export const Register = (props) => {
                     }
                 } else {
                     const data = await response.json();
+                    props.refToken(data.token);
                     setMessage(data.message);
                     setUserContext((oldValues) => {
                         return { ...oldValues, token: data.token };

@@ -8,6 +8,7 @@ import "./styles.css";
 function App() {
     const [activeForm, setActiveForm] = useState("login");
     const [userContext, setUserContext] = useContext(UserContext);
+    const [token, setToken] = useState(localStorage.getItem("refreshToken"));
 
     const toggle_login_register = (formName) => {
         setActiveForm(formName);
@@ -18,9 +19,14 @@ function App() {
             method: "POST",
             withCredentials: true,
             credentials: "include",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json",
+                        'Authorization': `Bearer ${token}` },
         }).then(async response => {
             if (response.ok) {
+                const auth = response.headers.get('Authorization');
+                const newToken = auth.split(" ")[1]
+                setToken(newToken)
+                localStorage.setItem("refreshToken", newToken);
                 const data = await response.json()
                 setUserContext(oldValues => {
                     return { ...oldValues, token: data.token }
@@ -31,7 +37,7 @@ function App() {
                 })
             }
             // call refreshToken every 5 minutes to renew the authentication token.
-            setTimeout(verifyUser, 5 * 60 * 1000)
+            //setTimeout(verifyUser, 1 * 60 * 1000)
         })
     }, [setUserContext])
 
@@ -53,18 +59,23 @@ function App() {
         }
     }, [syncLogout])
 
+    const handleToken = (token) => {
+        setToken(token);
+        localStorage.setItem("refreshToken", token);
+    }
+
     return userContext.token === null ? (
         <div id="login_register_div">
             {
-                activeForm === "login" ? <Login switchForm={toggle_login_register} /> : <Register switchForm={toggle_login_register} />
+                activeForm === "login" ? <Login switchForm={toggle_login_register} refToken={handleToken} /> : <Register switchForm={toggle_login_register} refToken={handleToken} />
             }
         </div>
     ) : userContext.token ? (
-        <Chat />
+        <Chat token={token} />
     ) : (
         <div id="login_register_div">
             {
-                activeForm === "login" ? <Login switchForm={toggle_login_register} /> : <Register switchForm={toggle_login_register} />
+                activeForm === "login" ? <Login switchForm={toggle_login_register} refToken={handleToken} /> : <Register switchForm={toggle_login_register} refToken={handleToken} />
             }
         </div>
     )

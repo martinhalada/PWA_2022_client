@@ -31,6 +31,9 @@ export const Login = (props) => {
                     }
                 } else {
                     const data = await response.json();
+                    const auth = response.headers.get('Authorization'); 
+                    
+                    props.refToken(data.token);
                     setMessage(data.message);
                     setUserContext((oldValues) => {
                         return { ...oldValues, token: data.token };
