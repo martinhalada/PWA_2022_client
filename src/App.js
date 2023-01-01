@@ -4,11 +4,12 @@ import { Login } from "./Login";
 import { Register } from "./Register";
 import { Chat } from "./Chat";
 import "./styles.css";
+import { useCookies } from "react-cookie";
 
 function App() {
     const [activeForm, setActiveForm] = useState("login");
     const [userContext, setUserContext] = useContext(UserContext);
-    const [token, setToken] = useState(localStorage.getItem("refreshToken"));
+    const [cookies, setCookie] = useCookies(["refreshToken"]);
 
     const toggle_login_register = (formName) => {
         setActiveForm(formName);
@@ -20,13 +21,14 @@ function App() {
             withCredentials: true,
             credentials: "include",
             headers: { "Content-Type": "application/json",
-                        'Authorization': `Bearer ${token}` },
+                        'Authorization': `Bearer ${cookies.refreshToken}` },
         }).then(async response => {
             if (response.ok) {
                 const auth = response.headers.get('Authorization');
                 const newToken = auth.split(" ")[1]
-                setToken(newToken)
-                localStorage.setItem("refreshToken", newToken);
+                //setToken(newToken)
+                //localStorage.setItem("refreshToken", newToken);
+                setCookie("refreshToken", newToken, {path: "/"});
                 const data = await response.json()
                 setUserContext(oldValues => {
                     return { ...oldValues, token: data.token }
@@ -60,8 +62,9 @@ function App() {
     }, [syncLogout])
 
     const handleToken = (token) => {
-        setToken(token);
-        localStorage.setItem("refreshToken", token);
+        //setToken(token);
+        //localStorage.setItem("refreshToken", token);
+        setCookie("refreshToken", token, {path: "/"});
     }
 
     return userContext.token === null ? (
@@ -71,7 +74,7 @@ function App() {
             }
         </div>
     ) : userContext.token ? (
-        <Chat token={token} />
+        <Chat token={cookies.refreshToken} />
     ) : (
         <div id="login_register_div">
             {

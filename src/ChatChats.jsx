@@ -32,7 +32,7 @@ const ChatChats = (props) => {
             {chats.length > 0 && (
                 <ul id="listOfChats">
                     {chats.map(chat => (
-                        <li key={chat.id} onClick={() => chatClicked(chat.id)}>
+                        <li key={chat.id} title="Otevřít chat" onClick={() => chatClicked(chat.id)}>
                             {chat.users.length === 2 && chat.users[0] === props.username && (
                                 chat.users[1]
                             )}

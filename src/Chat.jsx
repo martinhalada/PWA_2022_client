@@ -72,7 +72,8 @@ export const Chat = (props) => {
                 Authorization: `Bearer ${userContext.token}`,
             },
         }).then(async response => {
-            localStorage.removeItem("refreshToken")
+            //localStorage.removeItem("refreshToken")
+            document.cookie = "refreshToken=;";
             socket.removeAllListeners();
             setUserContext(oldValues => {
                 return { ...oldValues, details: undefined, token: null }

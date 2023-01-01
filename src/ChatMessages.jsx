@@ -110,7 +110,7 @@ const ChatMessages = (props) => {
     if (props.chatId !== ""){
         return (
             <div id="listOfMessagesDiv">
-                <h3>Chat id: {props.chatId}</h3>
+                <h4>Chat id: {props.chatId}</h4>
                 <ul id="listOfMessages">
                 </ul>
                 <div id="statusDiv"></div>

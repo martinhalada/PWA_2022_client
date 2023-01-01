@@ -71,7 +71,7 @@ const ChatUsers = (props) => {
             {users.length > 0 && (
                 <ul id="listOfUsers">
                     {users.map(user => (
-                        <li id={user.username} key={user.username} onClick={() => userClicked(user.username)}>
+                        <li id={user.username} key={user.username} title="Založit nový chat (pokud neexistuje)" onClick={() => userClicked(user.username)}>
                             {user.username}
                         </li>
                     ))}

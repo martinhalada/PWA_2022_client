@@ -1,5 +1,5 @@
 html, body {
-    background:white;
+    background:rgb(255, 255, 255);
     padding: 5px;
     margin: 0;
     color: black;
@@ -42,6 +42,26 @@ html, body {
 
 ul {
     list-style-type: none;
+    padding-left: 17px;
+    list-style: none;
+}
+
+#listOfChats > li {
+    height: 35px;
+}
+
+#listOfUsers > li {
+    height: 35px;
+}
+
+#listOfChats > li:hover{
+    background: #c7c7c7;
+    cursor: pointer;
+}
+
+#listOfUsers > li:hover {
+    background: #c7c7c7;
+    cursor: pointer;
 }
 
 li.right {
@@ -55,6 +75,7 @@ li.left {
 
 li.online::before{
     content: "\2022";
+    color: rgb(11, 175, 11);
     display: inline-block; 
     width: 1em;
     margin-left: -1em

@@ -58,7 +58,7 @@ export const Register = (props) => {
             <p>{message}</p>
             <form id="register_form" className="form-horizontal" onSubmit={submitForm}>
                 <div className="form-group form-inline">
-                    <label htmlFor="username" className="col-sm-1 control-label">Uživatelské jméno</label>
+                    <label htmlFor="username" className="col-sm-1 control-label">Jméno</label>
                     <div className="col-sm-5">
                         <input onChange={(e) => setUsername(e.target.value)} type="username" className="form-control" id="username" name="username" required placeholder="Uživatelské jméno" />
                     </div>
